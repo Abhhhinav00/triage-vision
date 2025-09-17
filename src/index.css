@@ -53,6 +53,14 @@ All colors MUST be HSL.
     --sidebar-border: 220 13% 91%;
 
     --sidebar-ring: 217.2 91.2% 59.8%;
+    
+    /* Triage color system */
+    --critical: 0 84% 60%;
+    --critical-foreground: 0 0% 100%;
+    --urgent: 43 96% 56%;
+    --urgent-foreground: 0 0% 0%;
+    --stable: 142 76% 36%;
+    --stable-foreground: 0 0% 100%;
   }
 
   .dark {
@@ -91,6 +99,14 @@ All colors MUST be HSL.
     --sidebar-accent-foreground: 240 4.8% 95.9%;
     --sidebar-border: 240 3.7% 15.9%;
     --sidebar-ring: 217.2 91.2% 59.8%;
+    
+    /* Triage color system - dark mode */
+    --critical: 0 84% 60%;
+    --critical-foreground: 0 0% 100%;
+    --urgent: 43 96% 56%;
+    --urgent-foreground: 0 0% 0%;
+    --stable: 142 76% 36%;
+    --stable-foreground: 0 0% 100%;
   }
 }
 
