@@ -44,13 +44,13 @@ export function PatientCard({ patient }: PatientCardProps) {
   const vitals = patient.vitals as Record<string, any> | null;
 
   return (
-    <Card className="w-full transition-all duration-200 hover:shadow-md">
-      <CardHeader className="pb-3">
+    <Card className="w-full transition-all duration-200 hover:shadow-lg border-l-4 border-l-primary/20">
+      <CardHeader className="pb-4">
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-2">
             <Badge 
               variant="outline" 
-              className={`${getTriageColor(patient.triage_level)} font-semibold`}
+              className={`${getTriageColor(patient.triage_level)} font-bold text-sm px-3 py-1`}
             >
               {getTriageIcon(patient.triage_level)}
               {patient.triage_level}
@@ -63,10 +63,10 @@ export function PatientCard({ patient }: PatientCardProps) {
         </div>
       </CardHeader>
       <CardContent className="pt-0">
-        <div className="space-y-2">
+        <div className="space-y-3">
           <div>
             <span className="text-sm font-medium text-muted-foreground">Patient ID:</span>
-            <p className="font-mono text-sm bg-muted px-2 py-1 rounded mt-1">
+            <p className="font-mono text-base bg-muted px-3 py-2 rounded-md mt-1 font-semibold">
               {patient.id.slice(-8).toUpperCase()}
             </p>
           </div>
