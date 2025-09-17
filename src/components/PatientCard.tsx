@@ -7,6 +7,7 @@ type Patient = Database['public']['Tables']['patients']['Row'];
 
 interface PatientCardProps {
   patient: Patient;
+  onClick: (patient: Patient) => void;
 }
 
 const getTriageColor = (level: string) => {
@@ -35,7 +36,7 @@ const getTriageIcon = (level: string) => {
   }
 };
 
-export function PatientCard({ patient }: PatientCardProps) {
+export function PatientCard({ patient, onClick }: PatientCardProps) {
   const arrivalTime = new Date(patient.arrival_time).toLocaleTimeString('en-US', {
     hour: '2-digit',
     minute: '2-digit',
@@ -44,7 +45,10 @@ export function PatientCard({ patient }: PatientCardProps) {
   const vitals = patient.vitals as Record<string, any> | null;
 
   return (
-    <Card className="w-full transition-all duration-200 hover:shadow-lg border-l-4 border-l-primary/20">
+    <Card 
+      className="w-full transition-all duration-200 hover:shadow-lg border-l-4 border-l-primary/20 cursor-pointer hover:border-l-primary/40"
+      onClick={() => onClick(patient)}
+    >
       <CardHeader className="pb-4">
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-2">

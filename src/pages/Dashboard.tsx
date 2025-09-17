@@ -1,10 +1,27 @@
+import { useState } from 'react';
 import { PatientCard } from '@/components/PatientCard';
+import { PatientDetailsModal } from '@/components/PatientDetailsModal';
 import { usePatients } from '@/hooks/usePatients';
 import { Badge } from '@/components/ui/badge';
 import { Activity, Users, Clock, AlertTriangle } from 'lucide-react';
+import type { Database } from '@/integrations/supabase/types';
+
+type Patient = Database['public']['Tables']['patients']['Row'];
 
 export default function Dashboard() {
   const { patients, loading, error } = usePatients();
+  const [selectedPatient, setSelectedPatient] = useState<Patient | null>(null);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
+  const handlePatientClick = (patient: Patient) => {
+    setSelectedPatient(patient);
+    setIsModalOpen(true);
+  };
+
+  const handleCloseModal = () => {
+    setIsModalOpen(false);
+    setSelectedPatient(null);
+  };
 
   const criticalCount = patients.filter(p => p.triage_level === 'Critical').length;
   const urgentCount = patients.filter(p => p.triage_level === 'Urgent').length;
@@ -78,10 +95,21 @@ export default function Dashboard() {
         ) : (
           <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
             {patients.map((patient) => (
-              <PatientCard key={patient.id} patient={patient} />
+              <PatientCard 
+                key={patient.id} 
+                patient={patient} 
+                onClick={handlePatientClick}
+              />
             ))}
           </div>
         )}
+
+        {/* Patient Details Modal */}
+        <PatientDetailsModal
+          patient={selectedPatient}
+          isOpen={isModalOpen}
+          onClose={handleCloseModal}
+        />
       </main>
     </div>
   );
