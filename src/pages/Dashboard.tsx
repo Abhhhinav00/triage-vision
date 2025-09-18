@@ -29,15 +29,17 @@ export default function Dashboard() {
 
   const generateRandomPatient = () => {
     const names = ['John Smith', 'Sarah Johnson', 'Michael Brown', 'Emma Davis', 'James Wilson', 'Lisa Garcia', 'David Miller', 'Anna Martinez', 'Robert Lopez', 'Jennifer Taylor'];
-    const symptomsList = ['chest pain', 'shortness of breath', 'headache', 'nausea', 'dizziness', 'fever', 'abdominal pain', 'fatigue'];
+    const symptomsList = ['chest pain', 'difficulty breathing', 'shortness of breath', 'headache', 'nausea', 'dizziness', 'fever', 'abdominal pain', 'fatigue'];
     
     const name = names[Math.floor(Math.random() * names.length)];
     const age = Math.floor(Math.random() * 80) + 18;
+    
+    // Generate vitals with occasional critical values
     const vitals = {
       heart_rate: Math.floor(Math.random() * 60) + 60,
-      blood_pressure_systolic: Math.floor(Math.random() * 80) + 100,
+      blood_pressure_systolic: Math.random() < 0.15 ? Math.floor(Math.random() * 40) + 180 : Math.floor(Math.random() * 80) + 100,
       blood_pressure_diastolic: Math.floor(Math.random() * 40) + 60,
-      spo2: Math.floor(Math.random() * 20) + 80,
+      spo2: Math.random() < 0.1 ? Math.floor(Math.random() * 10) + 80 : Math.floor(Math.random() * 20) + 90,
       temperature: (Math.random() * 4 + 96.5).toFixed(1),
       respiratory_rate: Math.floor(Math.random() * 20) + 12
     };
@@ -50,14 +52,14 @@ export default function Dashboard() {
     
     // Rule-based triage classification
     let triage_level = 'Stable';
-    let explanation = 'Vital signs and symptoms are stable.';
+    let explanation = "Patient's vital signs are within normal range and no critical symptoms were detected.";
     
     if (vitals.spo2 < 90 || vitals.blood_pressure_systolic > 180) {
       triage_level = 'Critical';
-      explanation = 'Critically low spO2 or high blood pressure.';
-    } else if (symptoms.includes('chest pain')) {
+      explanation = 'Critically low spO2 or high blood pressure detected.';
+    } else if (symptoms.includes('chest pain') || symptoms.includes('difficulty breathing')) {
       triage_level = 'Urgent';
-      explanation = 'Patient is reporting chest pain.';
+      explanation = 'Patient is reporting chest pain or difficulty breathing.';
     }
     
     return {
